@@ -83,3 +83,12 @@ crm_df["Tenure Bucket"] = crm_df["Tenure Months"].apply(tenure_buckets)
 '''Now I will merge the 3 dfs into 1 clean dataset using the common key 'CustomerID'.'''
 merged_df = crm_df.merge(billing_df, on="CustomerID", how="inner")
 merged_df = merged_df.merge(usage_df, on="CustomerID", how="inner")
+
+'''
+print(f"Merged Data: {merged_df.shape[0]} rows, {merged_df.shape[1]} columns")
+print(merged_df.head())
+print(merged_df.info())
+print(merged_df.describe())
+print(merged_df.isnull().sum())
+print(merged_df.duplicated().sum())
+'''
