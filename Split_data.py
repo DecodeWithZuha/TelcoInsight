@@ -51,7 +51,14 @@ usage_cols = [
 usage_df = df[usage_cols]
 usage_df.to_csv(f"{Split_data_path}/usage_data.csv", index=False)
 
+"""
 print("\nSplit complete. Files created:")
 print(f" - {Split_data_path}/crm_data.csv       ({crm_df.shape[0]} rows, {crm_df.shape[1]} cols)")
 print(f" - {Split_data_path}/billing_data.csv   ({billing_df.shape[0]} rows, {billing_df.shape[1]} cols)")
 print(f" - {Split_data_path}/usage_data.csv     ({usage_df.shape[0]} rows, {usage_df.shape[1]} cols)")
+
+Output:
+ - data/processed/crm_data.csv       (7043 rows, 13 cols)
+ - data/processed/billing_data.csv   (7043 rows, 6 cols)
+ - data/processed/usage_data.csv     (7043 rows, 14 cols)
+"""
