@@ -42,11 +42,22 @@ billing_df["Total Charges"] = billing_df["Total Charges"].fillna(0)
 
 #Now I will standardize yes/no columns to boolean values (1 for Yes, 0 for No).
 #creating a function
-def yes_no_to_bool(df, columns):
+def boolean(df, columns):
     for col in columns:
         if col in df.columns:
             df[col] = df[col].map({"Yes": True, "No": False}).fillna(df[col])
     return df
 
-crm_df = yes_no_to_bool(crm_df, ["Partner", "Dependents"])
-billing_df = yes_no_to_bool(billing_df, ["Paperless Billing"])
+crm_df = boolean(crm_df, ["Partner", "Dependents"])
+billing_df = boolean(billing_df, ["Paperless Billing"])
+
+#In usage_df, there are some columns which have more than 2 unique values, like 'Yes', 'No', 'No internet service', and 'No phone service'.
+#Here I will convert 'No internet service' and 'No phone service' to 'No' for the relevant columns, and then convert them to boolean values.
+def convert_to_no(df, columns):
+    for col in columns:
+        if col in df.columns:
+            df[col] = df[col].replace({"No internet service": "No", "No phone service": "No"})
+    return df
+
+usage_df = convert_to_no(usage_df, ["Phone Service", "Multiple Lines", "Online Security", "Online Backup", "Device Protection", "Tech Support", "Streaming TV", "Streaming Movies"])
+usage_df = boolean(usage_df, ["Phone Service", "Multiple Lines", "Online Security", "Online Backup", "Device Protection", "Tech Support", "Streaming TV", "Streaming Movies"])
