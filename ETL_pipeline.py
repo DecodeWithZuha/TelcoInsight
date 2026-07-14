@@ -5,9 +5,10 @@ E - Extract : Read the 3 simulated source system CSVs
 T - Transform : Clean, standardize, and join into one business-ready dataset
 L - Load : Push the clean dataset into a PostgreSQL staging table
 """
-
+from dotenv import load_dotenv
+import os
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, URL
 
 #Extract: Read the 3 simulated source system CSVs
 crm_df = pd.read_csv("data/processed/crm_data.csv")
@@ -92,3 +93,29 @@ print(merged_df.describe())
 print(merged_df.isnull().sum())
 print(merged_df.duplicated().sum())
 '''
+
+
+'''Load: Push the clean dataset into a PostgreSQL staging table'''
+load_dotenv()
+
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_NAME = os.getenv("DB_NAME")
+
+connection_url = URL.create(
+    "postgresql+psycopg2",
+    username=DB_USER,
+    password=DB_PASSWORD,
+    host=DB_HOST,
+    port=DB_PORT,
+    database=DB_NAME
+)
+
+engine = create_engine(connection_url)
+
+merged_df.to_sql("staging_customer_360", engine, if_exists="replace", index=False)
+
+#print("Data loaded successfully into table: staging_customer_360")
+p#rint("\nETL Pipeline completed successfully!")
