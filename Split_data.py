@@ -46,8 +46,7 @@ billing_df.to_csv(f"{Split_data_path}/billing_data.csv", index=False)
 usage_cols = [
     "CustomerID", "Phone Service", "Multiple Lines", "Internet Service",
     "Online Security", "Online Backup", "Device Protection", "Tech Support",
-    "Streaming TV", "Streaming Movies",
-    "Churn Label", "Churn Value", "Churn Score", "Churn Reason"
+    "Streaming TV", "Streaming Movies", "Churn Label", "Churn Value", "Churn Score", "Churn Reason"
 ]
 usage_df = df[usage_cols]
 usage_df.to_csv(f"{Split_data_path}/usage_data.csv", index=False)
