@@ -118,4 +118,4 @@ engine = create_engine(connection_url)
 merged_df.to_sql("staging_customer_360", engine, if_exists="replace", index=False)
 
 #print("Data loaded successfully into table: staging_customer_360")
-#rint("\nETL Pipeline completed successfully!")
+#print("\nETL Pipeline completed successfully!")
