@@ -31,3 +31,22 @@ Usage Data: 7043 rows, 14 columns
 #I will handle this by filling the missing values with 0 and converting the column to float type.
 #Why 0? because all these are the new customers who haven't completed their first billing cycle.
 #I am not dropping them, because they are valid customers
+billing_df["Total Charges"] = billing_df["Total Charges"].replace(" ", "0")
+
+#Converting the 'Total Charges' column to float type and making them NAN.
+billing_df["Total Charges"] = pd.to_numeric(billing_df["Total Charges"], errors="coerce")
+
+#Filling NAN values with 0.
+billing_df["Total Charges"] = billing_df["Total Charges"].fillna(0)
+
+
+#Now I will standardize yes/no columns to boolean values (1 for Yes, 0 for No).
+#creating a function
+def yes_no_to_bool(df, columns):
+    for col in columns:
+        if col in df.columns:
+            df[col] = df[col].map({"Yes": True, "No": False}).fillna(df[col])
+    return df
+
+crm_df = yes_no_to_bool(crm_df, ["Partner", "Dependents"])
+billing_df = yes_no_to_bool(billing_df, ["Paperless Billing"])
