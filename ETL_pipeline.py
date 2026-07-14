@@ -29,4 +29,5 @@ Usage Data: 7043 rows, 14 columns
 
 #While checking the data, I noticed that the 'Total Charges' column in the billing_df has some missing values. 
 #I will handle this by filling the missing values with 0 and converting the column to float type.
-#Why 0? because al these are the new customers who have not been charged yet.
+#Why 0? because all these are the new customers who haven't completed their first billing cycle.
+#I am not dropping them, because they are valid customers
