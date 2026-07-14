@@ -27,10 +27,11 @@ Usage Data: 7043 rows, 14 columns
 
 #Transform: Clean, standardize, and join into one business-ready dataset
 
-#While checking the data, I noticed that the 'Total Charges' column in the billing_df has some missing values. 
+'''While checking the data, I noticed that the 'Total Charges' column in the billing_df has some missing values. 
 #I will handle this by filling the missing values with 0 and converting the column to float type.
 #Why 0? because all these are the new customers who haven't completed their first billing cycle.
-#I am not dropping them, because they are valid customers
+#I am not dropping them, because they are valid customers'''
+
 billing_df["Total Charges"] = billing_df["Total Charges"].replace(" ", "0")
 
 #Converting the 'Total Charges' column to float type and making them NAN.
@@ -40,7 +41,7 @@ billing_df["Total Charges"] = pd.to_numeric(billing_df["Total Charges"], errors=
 billing_df["Total Charges"] = billing_df["Total Charges"].fillna(0)
 
 
-#Now I will standardize yes/no columns to boolean values (1 for Yes, 0 for No).
+'''Now I will standardize yes/no columns to boolean values (1 for Yes, 0 for No).'''
 #creating a function
 def boolean(df, columns):
     for col in columns:
@@ -61,3 +62,24 @@ def convert_to_no(df, columns):
 
 usage_df = convert_to_no(usage_df, ["Phone Service", "Multiple Lines", "Online Security", "Online Backup", "Device Protection", "Tech Support", "Streaming TV", "Streaming Movies"])
 usage_df = boolean(usage_df, ["Phone Service", "Multiple Lines", "Online Security", "Online Backup", "Device Protection", "Tech Support", "Streaming TV", "Streaming Movies"])
+
+'''Now here i will follow a business rule Tenure Buckets and create a new column 'Tenure Bucket' '''
+
+#why? beacuse it is easier to analyze the churn rate based on tenure buckets rather than individual months. This will help in identifying patterns and trends in customer behavior over time.
+def tenure_buckets(months):
+    if months <= 12:
+        return "0-12 months"
+    elif months <= 24:
+        return "12-24 months"
+    elif months <= 36:
+        return "24-36 months"
+    elif months <= 48:
+        return "36-48 months"
+    else:
+        return "48+ months"
+    
+crm_df["Tenure Bucket"] = crm_df["Tenure Months"].apply(tenure_buckets)
+
+'''Now I will merge the 3 dfs into 1 clean dataset using the common key 'CustomerID'.'''
+merged_df = crm_df.merge(billing_df, on="CustomerID", how="inner")
+merged_df = merged_df.merge(usage_df, on="CustomerID", how="inner")
