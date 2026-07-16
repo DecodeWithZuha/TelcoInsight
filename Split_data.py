@@ -48,6 +48,7 @@ usage_cols = [
     "Online Security", "Online Backup", "Device Protection", "Tech Support",
     "Streaming TV", "Streaming Movies", "Churn Label", "Churn Value", "Churn Score", "Churn Reason"
 ]
+
 usage_df = df[usage_cols]
 usage_df.to_csv(f"{Split_data_path}/usage_data.csv", index=False)
 
