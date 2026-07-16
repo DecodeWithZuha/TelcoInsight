@@ -55,6 +55,7 @@ billing_df = boolean(billing_df, ["Paperless Billing"])
 
 #In usage_df, there are some columns which have more than 2 unique values, like 'Yes', 'No', 'No internet service', and 'No phone service'.
 #Here I will convert 'No internet service' and 'No phone service' to 'No' for the relevant columns, and then convert them to boolean values.
+
 def convert_to_no(df, columns):
     for col in columns:
         if col in df.columns:
