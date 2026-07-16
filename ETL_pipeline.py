@@ -67,8 +67,8 @@ usage_df = convert_to_no(usage_df, ["Phone Service", "Multiple Lines", "Online S
 usage_df = boolean(usage_df, ["Phone Service", "Multiple Lines", "Online Security", "Online Backup", "Device Protection", "Tech Support", "Streaming TV", "Streaming Movies"])
 
 '''Now here i will follow a business rule Tenure Buckets and create a new column 'Tenure Bucket' '''
-
 #why?? beacuse it is easier to analyze the churn rate based on tenure buckets rather than individual months. This will help in identifying patterns and trends in customer behavior over time.
+
 def tenure_buckets(months):
     if months <= 12:
         return "0-12 months"
