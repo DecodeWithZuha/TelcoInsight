@@ -44,6 +44,7 @@ billing_df["Total Charges"] = billing_df["Total Charges"].fillna(0)
 
 '''Now I will standardize yes/no columns to boolean values (1 for Yes, 0 for No).'''
 #creating a function
+
 def boolean(df, columns):
     for col in columns:
         if col in df.columns:
